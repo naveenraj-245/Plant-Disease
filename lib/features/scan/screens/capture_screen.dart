@@ -1,17 +1,18 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'processing_screen.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'processing_screen.dart'; 
 
 class CaptureScreen extends StatefulWidget {
   const CaptureScreen({super.key});
 
   @override
-  _CaptureScreenState createState() => _CaptureScreenState();
+  State<CaptureScreen> createState() => _CaptureScreenState();
 }
 
 class _CaptureScreenState extends State<CaptureScreen> {
-  File? _selectedImage;
+  XFile? _selectedImage; 
   bool _isBatchUpload = false;
   final ImagePicker _picker = ImagePicker();
 
@@ -19,7 +20,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
     final XFile? pickedFile = await _picker.pickImage(source: source);
     if (pickedFile != null) {
       setState(() {
-        _selectedImage = File(pickedFile.path);
+        _selectedImage = pickedFile; 
       });
     }
   }
@@ -32,7 +33,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
-        title: const Text('CitrusAI', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+        title: const Text('Scan Plant', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         centerTitle: true,
       ),
       body: Padding(
@@ -50,11 +51,13 @@ class _CaptureScreenState extends State<CaptureScreen> {
                 child: _selectedImage != null
                     ? ClipRRect(
                         borderRadius: BorderRadius.circular(18),
-                        child: Image.file(_selectedImage!, fit: BoxFit.cover),
+                        child: kIsWeb 
+                            ? Image.network(_selectedImage!.path, fit: BoxFit.cover) 
+                            : Image.file(File(_selectedImage!.path), fit: BoxFit.cover),
                       )
-                    : Column(
+                    : const Column(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Icons.image_search, size: 80, color: Colors.green),
                           SizedBox(height: 15),
                           Text('Center the leaf for disease detection', style: TextStyle(color: Colors.grey)),
@@ -91,6 +94,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
                     foregroundColor: Colors.green,
                     side: const BorderSide(color: Colors.green),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
                 ),
                 ElevatedButton.icon(
@@ -101,6 +105,7 @@ class _CaptureScreenState extends State<CaptureScreen> {
                     backgroundColor: Colors.green,
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   ),
                 ),
               ],
@@ -111,7 +116,11 @@ class _CaptureScreenState extends State<CaptureScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const ProcessingScreen()),
+                    MaterialPageRoute(
+                      builder: (context) => ProcessingScreen(
+                        imageFile: kIsWeb ? null : File(_selectedImage!.path),
+                      ),
+                    ),
                   );
                 },
                 style: ElevatedButton.styleFrom(

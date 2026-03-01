@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../home/screens/home_screen.dart';
+import '../../shared/widgets/custom_button.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -116,25 +117,14 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
                   ),
                 ),
                 const SizedBox(height: 25),
-                ElevatedButton(
+                CustomButton(
+                  label: isLogin ? 'Login' : 'Sign Up',
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(builder: (context) => const HomeScreen()),
                     );
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                  child: Text(
-                    isLogin ? 'Login' : 'Sign Up',
-                    style: const TextStyle(fontSize: 18),
-                  ),
                 ),
                 const SizedBox(height: 10),
                 TextButton(

@@ -1,11 +1,13 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'results_screen.dart';
 
 class ProcessingScreen extends StatefulWidget {
-  const ProcessingScreen({super.key});
+  final File? imageFile;
+  const ProcessingScreen({super.key, this.imageFile});
 
   @override
-  _ProcessingScreenState createState() => _ProcessingScreenState();
+  State<ProcessingScreen> createState() => _ProcessingScreenState();
 }
 
 class _ProcessingScreenState extends State<ProcessingScreen> with SingleTickerProviderStateMixin {
@@ -22,6 +24,7 @@ class _ProcessingScreenState extends State<ProcessingScreen> with SingleTickerPr
       });
     
     _controller.forward().then((_) {
+      if (!mounted) return;
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ResultsScreen()),

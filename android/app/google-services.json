@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "733935937931",
+    "project_id": "plant-disease-1",
+    "storage_bucket": "plant-disease-1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733935937931:android:ccc63d11cebea65a71e78e",
+        "android_client_info": {
+          "package_name": "com.example.plant_aplication_1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd_KMMBFIYMZ6oTfjl4oBKDMzRgg2lr3o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'treatment_screen.dart';
-import 'pdf_export_screen.dart';
+import 'treatment_screen.dart'; // Uncomment when created
+import 'pdf_export_screen.dart'; // Uncomment when created
 
 class ResultsScreen extends StatelessWidget {
   const ResultsScreen({super.key});
@@ -79,7 +79,7 @@ class ResultsScreen extends StatelessWidget {
             ),
             const SizedBox(height: 15),
             SizedBox(
-              height: 150,
+              height: 200, 
               child: BarChart(
                 BarChartData(
                   alignment: BarChartAlignment.spaceAround,
@@ -91,12 +91,24 @@ class ResultsScreen extends StatelessWidget {
                       sideTitles: SideTitles(
                         showTitles: true,
                         getTitlesWidget: (value, meta) {
+                          Widget text;
                           switch (value.toInt()) {
-                            case 0: return const Text('HLB');
-                            case 1: return const Text('Canker');
-                            case 2: return const Text('Healthy');
-                            default: return const Text('');
+                            case 0:
+                              text = const Text('HLB');
+                              break;
+                            case 1:
+                              text = const Text('Canker');
+                              break;
+                            case 2:
+                              text = const Text('Healthy');
+                              break;
+                            default:
+                              text = const Text('');
                           }
+                          return SideTitleWidget(
+                            axisSide: meta.axisSide,
+                            child: text,
+                          );
                         },
                       ),
                     ),
